@@ -1,9 +1,11 @@
-\documentclass[a4paper, draft, reqno, 12pt, openbib]{article} % document class amsart class, draft points out the lines that are two long, reqno puts equations numbers to the right
+\documentclass[a4paper, reqno, 12pt, openbib]{article} % document class amsart class, draft points out the lines that are two long, reqno puts equations numbers to the right
 \usepackage{geometry}\geometry{a4paper,total={170mm,250mm},left=20mm,top=25mm} % define margins of the document
 \usepackage{graphicx} % package to load illustrations
 \usepackage{listings} % package to read a programming language if included
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage{color} 
 \usepackage{hyperref} % enable hyperlinks in the document 
 \hypersetup{
@@ -29,13 +31,116 @@ pradeepjanakiraman@student.tudelft.nl}
 \newpage
 %---------------------------- TABLE OF CONTENTS ------------------------------------%
 \section{Introduction}
-This document is a compilation of the notes that were taken while I prepared for the ME46006, Physics for Mechanical Engineers course exam. It was written with the intention to revise as I was copying over some notes in the hopes that I would review some of the material while typing this out. The organisation of the document is simple, it starts with the necessary review of necessary mathematical prerequisites. These are mainly from the excellent resource that is \href{https://www.feynmanlectures.caltech.edu/II_toc.html}{Feynman's lectures on Physics, Volume 2}. In fact, much of the course material is covered in these volume and it can be used as an additional reference, as I have done. The remaining part of this document covers the lectures that were covered in order and my summaries for each of them, example problems and homework problems that were assigned.
-\section{  
-	
-	
-	
-	
-	
-	
-	
+This document is a compilation of the notes that were taken while I prepared for the ME46006, Physics for Mechanical Engineers course exam. It was written with the intention to revise as I was copying over some notes in the hopes that I would review some of the material while typing this out. The organisation of the document is simple, it starts with the necessary review of necessary mathematical prerequisites. These are mainly from the excellent resource that is \href{https://www.feynmanlectures.caltech.edu/II_toc.html}{Feynman's lectures on Physics, Volume 2}. In fact, much of the course material is covered in volume 2 and it can be used as an additional reference, as I have done. The remaining part of this document covers my summaries of the lectures in order, example problems and homework problems that were assigned.
+\section{Math and Physics preliminaries} 
+Two basic operations in vector algebra are presented below, which are the dot product and the cross product. 
+\begin{align}
+	\label{dot product}
+	\vec{A} \cdot \vec{B} &= 
+		\begin{bmatrix}
+			a_{x} & a_{y} & a_{z}
+		\end{bmatrix} 
+		\begin{bmatrix}
+			b_{1}\\
+			b_{2}\\
+			b_{3}
+		\end{bmatrix} = S\\	
+	\label{cross product}
+	\vec{A} \times \vec{B} &= 
+		\begin{bmatrix}
+			a_{y}b_{z} - b_{y}a_{z}\\
+			b_{x}a_{z} - a_{x}b_{z}\\
+			a_{x}b_{y} - b_{x}a_{y}
+		\end{bmatrix} = \vec{V} 
+\end{align}	
+$\vec{A}, \vec{B}$ are vectors that live in 3-dimensions, from \autoref{dot product} we find that two vectors produce a scalar. While from \autoref{cross product}, we find that two vectors produce another, third vector that is orthogonal to the first two ($\vec{V} \perp \vec{A}, \vec{B}$). We also have to recall that a dot product in \autoref{dot product} represents a projection of the first vector onto the second vector. From these pieces of information, we can also derive the following. 
+\begin{align}
+	\label{cross cross} 
+	\vec{A} \times \vec{A} &= 0\\
+	\label{dot cross}
+	\vec{A} \cdot \Big[ \vec{A} \times \vec{B} \Big] &= 0
+\end{align}
+Clearly, projecting a vector onto another vector that is orthogonal to it would lead to the zero vector. We can further write the following identities. 
+\begin{align}
+	\vec{A} \cdot \Big[ \vec{B} \times \vec{C} \Big] &= \Big[\vec{A} \times \vec{B} \Big] \cdot C\\
+	\vec{A} \times \Big[\vec{B} \times \vec{C} \Big] &= \vec{B}(\vec{A} \cdot \vec{C}) - \vec{C}(\vec{A} \cdot \vec{B})
+\end{align} 
+\subsection{Scalar fields and Vector fields} 
+Firstly, a field is a physical quantity that varies in space. When those quantities are just single numbers then that field is a \emph{scalar field}. For example, a temperature field contains the temperature at different points in space. Each point in space is characterised by a scalar value. We can then think of representing how the temperature \emph{changes} at every point. That is which direction is the temperature increasing or decreasing in. We can imagine that there would then be another field that would represent the changing trend of temperatures at each point. Such a field would then be a \emph{vector field}, since the field is in three dimensional space and a change has to be quantified by a direction.
+\begin{equation}
+	\label{transport equation}
+	\Delta T = \frac{\partial T}{\partial x}\Delta x +  \frac{\partial T}{\partial y}\Delta y + \frac{\partial T}{\partial z}\Delta z
+\end{equation}
+The above equation makes intuitive sense. For each direction we first find the derivative function. For each point we would then have the value for the derivative by substituting the value of $x,y, z$ into $\frac{\partial T}{\partial x}, \frac{\partial T}{\partial y}, \frac{\partial T}{\partial z}$. Multiplying each component of the overall derivative with the individual change in the components of the position would then result in the change of temperature between the two positions. The components of the derivative can then be made to form a vector such that, 
+\begin{equation}
+	  \vec{\nabla}T = 
+	  \begin{bmatrix} 
+	  	\frac{\partial T}{\partial x} & \frac{\partial T}{\partial y} & \frac{\partial T}{\partial z}
+	  \end{bmatrix}
+\end{equation}
+The $\vec{\nabla}$ vector is an operator, and when it acts on a scalar field such as $T$ it results in a vector as seen above. \autoref{transport equation} can then be succinctly represented as, 
+\begin{equation}
+	\Delta T = \nabla T \Delta r
+\end{equation}
+The natural question to ask, would then be to see if the $\vec{\nabla}$ operator can be used for anything else. Indeed, another two interesting applications for the $\vec{\nabla}$ operator is called the divergence and curl of a vector field.\\
+\newline
+Divergence: 
+\begin{equation}
+	\vec{\nabla} \cdot \vec{h} = \frac{\partial h_{x}}{\partial x} + \frac{\partial h_{y}}{\partial y} + \frac{\partial h_{z}}{\partial z}
+\end{equation}
+Curl: 
+\begin{equation}
+\vec{\nabla} \times \vec{h} = 
+	\begin{bmatrix} 
+		\frac{\partial h_{z}}{\partial y} - \frac{\partial h_{y}}{\partial z}\\
+		\frac{\partial h_{x}}{\partial z} - \frac{\partial h_{z}}{\partial x}\\
+		\frac{\partial h_{y}}{\partial x} - \frac{\partial h_{x}}{\partial y}
+	\end{bmatrix}
+\end{equation}
+\subsection{Interaction of div and curl operators}
+After going through the definitions of the divergence and curl, we can consider second derivatives. Consider the first equation, while referring to \autoref{cross cross}.
+\begin{equation}
+\vec{\nabla} \times \Big[ \vec{\nabla} T \Big] = \Big[ \vec{\nabla} \times \vec{\nabla} \Big]T = 0
+\end{equation}
+From this there is a useful theorem that we can use without really going through the proof. 
+\begin{align*}
+	\label{curl grad}
+	\text{Theorem:}\\
+		&\text{If $\nabla \times \vec{D}$} = 0\\
+		&\text{There exists} \hspace{10mm}  \psi\\
+		&\text{Such that,} \hspace{10mm} \vec{D} = \nabla \psi
+\end{align*}
+Now consider a second equation that we derive from \autoref{dot cross}. 
+\begin{equation}
+	\vec{\nabla} \cdot \Big[ \vec{\nabla} \times \vec{h} \Big] = 0
+\end{equation}
+Similarly, we can write another result that we can derive from \autoref{dot cross}. 
+\begin{align*}
+	\label{div curl}
+	\text{Theorem:}\\
+		&\text{If $\vec{\nabla} \cdot \vec{C}  = 0$}\\
+		&\text{There exists,} \hspace{10mm} \vec{\mu}\\
+		&\text{Such that,} \hspace{10mm} \vec{C} = \nabla \times \vec{\mu}
+\end{align*}
+Other second derivatives we can then consider are: 
+\begin{align}
+	\vec{\nabla} \cdot \vec{\nabla T} &= \vec{\nabla}^{2}T\\
+	\vec{\nabla} \Big[ \vec{\nabla} \cdot \vec{h} \Big] = \text{A vector}\\
+	\Big[ \vec{\nabla} \cdot \vec{\nabla} \Big]\vec{h} = \vec{\nabla}^{2}\vec{h}\\
+	\vec{\nabla} \times \Big[ \vec{\nabla} \times \vec{h} \Big] = \vec{\nabla}\Big[ \vec{\nabla} \cdot \vec{h} \Big] - \vec{\nabla}^{2}\vec{h}\\
+\end{align} 
+We should note that: 
+\begin{equation} 
+	\vec{\nabla}^{2} = \frac{\partial^{2}}{\partial x} + \frac{\partial^{2}}{\partial y} + \frac{\partial^{2}}{\partial z} \hspace{15mm} \text{(An operator)}
+\end{equation}
+
+
+
+
+
+
+ 
+
+
+ 
 \end{document}
