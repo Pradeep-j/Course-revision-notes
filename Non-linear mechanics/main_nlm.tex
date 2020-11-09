@@ -1,0 +1,36 @@
+\documentclass[a4paper, reqno, 12pt, openbib]{article} % document class amsart class, draft points out the lines that are two long, reqno puts equations numbers to the right
+\usepackage{geometry}\geometry{a4paper,total={170mm,250mm},left=20mm,top=25mm} % define margins of the document
+\usepackage{graphicx} % package to load illustrations
+\usepackage{listings} % package to read a programming language if included
+\usepackage{float} % package needed to fix figures in place
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{color} 
+\usepackage{hyperref} % enable hyperlinks in the document 
+\hypersetup{
+    colorlinks = true,
+    linktoc = all,
+    citecolor=green,
+    filecolor=black,
+    linkcolor=blue,
+    urlcolor=red
+}
+% --------------------------- PREAMBLE --------------------------------------------%
+\begin{document}
+\title{Non-linear mechanics notes}
+\author{Pradeep Janakiraman \thanks{TU Delft student from 2019-2021, notes written in Quarter 2 of AY 2020-2021}\\
+3ME department\\
+TU Delft, The Netherlands\\
+pradeepjanakiraman@student.tudelft.nl}
+\date{9 November 2020}
+\maketitle
+%---------------------------- TITLE PAGE ------------------------------------------%
+\newpage
+\tableofcontents
+\newpage
+%-----------
+\input{Introduction_nlm/Introduction_nlm}
+\input{Lecture 1_nlm/Lecture 1_nlm}
+\end{document}
