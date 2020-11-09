@@ -1,0 +1,15 @@
+\section{Motivation behind the course}
+\subsection{Identifying linear static models}
+The first part of the course will involve trying find the parameters of a function $f(\theta)$ that will be used to model a real system with measurements $y$. The course will focus on linear models however, so $f(\theta) = F\theta$. The problem is then reduced to: 
+\begin{equation}
+	\min_{\theta} \|y - F\theta\|^{2}
+\end{equation}
+\subsection{Filtering} 
+In the second part of the course, instead of identifying static parameters of a model, we will be identifying states of a system that vary with time. In this scenario, we are aware of the models that define the system and we want to make a prediction of the next state. We are also given the current state and current output, and have access to the history of states and outputs. The problem can be written as: 
+\begin{align}
+	x_{k+1} &= Ax_{k} + Bu_{k}\\
+	y_{k} &= Cx_{k} + Du_{k}
+\end{align} 
+\subsection{Identification} 
+In the last part of the course, we face the situation where we do not have any knowledge of the model that defines the system. We are then tasked to find the $(A, B, C, D)$ matrices or parametric models in the form of $f(\theta)$. 
+
